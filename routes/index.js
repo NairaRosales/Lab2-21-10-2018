@@ -25,4 +25,17 @@ router.get('/playlist', async (req, res) => {
   }
 });
 
+router.get('/contacto', async (req, res) => {
+  try {
+    const client = await pool.connect()
+    const result = await client.query ('SELECT * FROM contacto');
+    const results = { 'results': (result) ? result.rows : null };
+    res.render('contacto', results);
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("ERROR " + err);
+  }
+});
+
 module.exports = router;
